@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2@m#+a@r3ybb2zt$@fso-6v16r=dz71i7og&q$tklal5967f2u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -67,23 +67,42 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'blogz.wsgi.application'
 
+# Cache
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        # "LOCATION": [
+        #     "redis://127.0.0.1:6379"
+        #     ],
+        "LOCATION": [
+            "redis://demo-redis.idddlr.clustercfg.aps1.cache.amazonaws.com:6379",
+            # "redis://demo-redis-0001-001.idddlr.0001.aps1.cache.amazonaws.com:6379",
+            # "redis://demo-redis-0001-002.idddlr.0001.aps1.cache.amazonaws.com:6379",
+            # "redis://demo-redis-0002-001.idddlr.0001.aps1.cache.amazonaws.com:6379",
+            # "redis://demo-redis-0002-002.idddlr.0001.aps1.cache.amazonaws.com:6379"
+            ],
+        'OPTIONS': {
+            "CLIENT_CLASS" : "blogz.redis_client.CustomRedisCluster"
+            # 'REDIS_CLIENT_CLASS': 'django_cluster_redis.cache.ClusterRedis',
+        }
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test',
-        'USER' : 'divyesh.rana',
-        'PASSWORD' : 'password',
-        'HOST' : 'localhost',
-        'PORT' : 5432
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'test',
+#         'USER' : 'divyesh.rana',
+#         'PASSWORD' : 'password',
+#         'HOST' : 'localhost',
+#         'PORT' : 5432
+#     }
+# }
 
 
 # Password validation
